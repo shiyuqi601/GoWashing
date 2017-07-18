@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'/>
+	<!-- <title>GetWash-云上干洗，触手可洗！</title> -->
+	<title>触手可洗-校园云干洗</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-2.1.3.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/cookie.js') }}"></script>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+<body unselectable="on" onselectstart="return false;">
+	<img id="logoImg" src="{{ url_for('static', filename='img/logo_new.png') }}">
+	<h2>选择您的地址</h2>
+	<div class="A" id="p1" style="display: none;">
+		<div class="country">
+			<div class="addr" onclick="minhang()">闵行</div>
+			<div class="addr">松江</div>
+			<div class="addr">奉贤</div>
+			<div class="addr">宝山</div>
+			<div class="addr">嘉定</div>
+			<div class="addr">徐汇</div>
+			<div class="addr">浦东</div>
+			<div class="addr">南汇</div>
+		</div>
+		<div class="login">
+			<a class="dengluBtn">登录</a>
+		</div>
+	</div>
+	<div class="A" id="p2" style="display: none;">
+		<div class="school">
+			<div class="addr" onclick="jiaoda()">上海交通大学</div>
+			<div class="addr">华东师范大学</div>
+			<div class="addr">上海电机学院</div>
+			<div class="addr">上海东海学院</div>
+		</div>
+		<div class="login">
+			<a onclick="fanhui1()">返回</a>
+			<span>或</span>
+			<a class="dengluBtn">登录</a>
+		</div>
+	</div>
+	<div class="A" id="p3" style="display: none;">
+	<!--
+		<div class="sushe">
+			<div class="addr loudong">X11</div>
+			<div class="addr loudong">X12</div>
+			<div class="addr loudong">X13</div>
+			<div class="addr loudong">X14</div>
+			<div class="addr loudong">X15</div>
+			<div class="addr loudong">X16</div>
+			<div class="addr loudong">X17</div>
+			<div class="addr loudong">X18</div>
+			<div class="addr loudong">X19</div>
+			<div class="addr loudong">X20</div>
+			<div class="addr loudong">X21</div>
+			<div class="addr loudong">X22</div>
+			<div class="addr loudong">D1</div>
+			<div class="addr loudong">D2</div>
+			<div class="addr loudong">D3</div>
+			<div class="addr loudong">D4</div>
+			<div class="addr loudong">D5</div>
+			<div class="addr loudong">D6</div>
+			<div class="addr loudong">D7</div>
+			<div class="addr loudong">D8</div>
+			<div class="addr loudong">D9</div>
+			<div class="addr loudong">D10</div>
+			<div class="addr loudong">D11</div>
+			<div class="addr loudong">D12</div>
+			<div class="addr loudong">D13</div>
+			<div class="addr loudong">D14</div>
+			<div class="addr loudong">D15</div>
+			<div class="addr loudong">D16</div>
+			<div class="addr loudong">D17</div>
+			<div class="addr loudong">D18</div>
+			<div class="addr loudong">D19</div>
+			<div class="addr loudong">D20</div>
+		</div>
+		-->
+		<div id="shijian">
+			<ul id="quyulist" class="droplist">
+				<li id="riqidrop" class="drop">区域<b class="triangle"></b></li>
+				<div class="container">
+					<li class="riqi">西区</li>
+<!-- 					<li class="riqi">西二区</li>
+					<li class="riqi">西三区</li>
+					<li class="riqi">西四区</li>
+					<li class="riqi">西五区</li> -->
+					<li class="riqi">东区</li>
+<!-- 					<li class="riqi">东二区</li>
+					<li class="riqi">东三区</li>
+					<li class="riqi">东四区</li> -->
+				</div>
+			</ul>
+			<ul id="loudonglist" class="droplist">
+				<li id="timedrop" class="drop">楼栋<b class="triangle"></b></li>
+				<div class="container"></div>
+			</ul>
+		</div>
+		<div class="login">
+			<a onclick="fanhui2()">返回</a>
+			<span>或</span>
+			<a class="dengluBtn">登录</a>
+		</div>
+		<span class="tishi"></span>
+	</div>
+	<div id="denglu" style="display: none;">
+		<form id="signin">
+			<input id="yonghuming" type="text" placeholder="用户名" required>
+			<input id="mima" type="password" placeholder="密码" required>
+		</form>
+		<br>
+		<div class="login">
+			<a onclick="confirm()">确认</a>
+			<span>或</span>
+			<a onclick="quxiao()">取消</a>
+		</div>
+		<br>
+		<span class="tishi"></span>
+	</div>
+	<div id="zhuce" style="display: none;">
+		<form id="signin">
+			<input id="yonghuming" type="text" placeholder="用户名" required>
+			<input id="mima" type="password" placeholder="密码" required>
+		</form>
+		<br>
+		<div class="login">
+			<a onclick="confirm()">确认</a>
+			<span>或</span>
+			<a onclick="quxiao()">取消</a>
+			<span>或</span>
+			<a onclick="zhuce()">注册</a>
+		</div>
+		<br>
+		<span class="tishi"></span>
+	</div>
+	<img id="processImg" src="{{ url_for('static', filename='img/process.png') }}">
+	<br>
+	<span style="text-decoration: underline;cursor:pointer;">关于我们</span>
+</body>
+	<script type="text/javascript">
+		var toggledDrop;
+		function minhang () {
+			$('#p1').fadeToggle(200);
+			setTimeout("$('#p2').fadeToggle(200)", 200);
+		}
+		function fanhui1 () {
+			$('#p2').fadeToggle(200);
+			setTimeout("$('#p1').fadeToggle(200)", 200);
+		}
+		function fanhui2 () {
+			$('#p3').fadeToggle(200);
+			setTimeout("$('#p2').fadeToggle(200)", 200);
+		}
+		function jiaoda () {
+			$('#p2').fadeToggle(200);
+			setTimeout("$('#p3').fadeToggle(200)", 200);
+		}
+		function quxiao () {
+			$('#denglu').fadeToggle(200);
+			setTimeout("$('#p1').fadeToggle(200)", 200);
+		}
+		function confirm() {
+			if ($("#yonghuming").val()=="" || $("#mima").val()=="") {
+				$('.tishi').text('请填写完整信息！');
+				$('.tishi').slideToggle(200);
+				setTimeout("$('.tishi').slideToggle(200);", 1000);
+			};
+		}
+		$(document).ready(function(){
+			$("#p1").fadeToggle(200);
+			$("a").mouseenter (
+				function () {
+					$(this).css({backgroundColor:"#FFFFFF","color":"#009bf5"});
+				}
+			);
+			$("a").mouseleave (
+				function () {
+					$(this).css({backgroundColor:"#009bf5",color:"#FFFFFF"});
+				}
+			);
+			$(".addr").mouseenter (
+				function () {
+					$(this).css({backgroundColor:"#FFFFFF","color":"#009bf5"});
+				}
+			);
+			$(".addr").mouseleave (
+				function () {
+					$(this).css({backgroundColor:"#009bf5",color:"#FFFFFF"});
+				}
+			);
+			$(".dengluBtn").click (
+				function () {
+					$(this).parent().parent().fadeToggle(200);
+					setTimeout("$('#denglu').fadeToggle(200)", 200);
+					$("#yonghuming").focus();
+				}
+			);
+			$(".loudong").click (
+				function () {
+					var temp = $(this).text();
+					$.cookie('dizhi', temp, { expires: 7 });
+					$.post("{{ url_for('dizhi') }}", {dizhi: temp}, function () {window.location.href = '';});
+				}
+			);
+			$(".container").delegate('.riqi', 'click', function() {
+				if($(this).text() == "西区") {
+					$("#loudonglist").children('.container').append('<li class="time">X10</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X11</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X12</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X13</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X14</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X15</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X16</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X17</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X18</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X19</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X20</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X21</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X22</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X23</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X24</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X25</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X26</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X27</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X28</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X29</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X30</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X31</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X32</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X33</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X34</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X35</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X36</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X37</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X38</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X39</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X40</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X41</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X42</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X43</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X44</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X45</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X46</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X47</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X48</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X49</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X50</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X51</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X52</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X53</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X54</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X55</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X56</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X57</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X58</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X59</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X60</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X61</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X62</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X63</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X64</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X65</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X66</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X67</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X68</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X69</li>');
+					$("#loudonglist").children('.container').append('<li class="time">X70</li>');
+				}
+				//  else if($(this).text() == "西二区") {
+				// } else if($(this).text() == "西三区") {
+				// } else if($(this).text() == "西四区") {
+				// } else if($(this).text() == "西五区") {
+				// } 
+				else if($(this).text() == "东区") {
+					$("#loudonglist").children('.container').append('<li class="time">D1</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D2</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D3</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D4</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D5</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D6</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D7</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D8</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D9</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D10</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D11</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D12</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D13</li>');
+					$("#loudonglist").children('.container').append('<li class="time">蓁蓁楼</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D14</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D15</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D16</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D17</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D18</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D19</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D20</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D21</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D22</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D23</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D24</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D25</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D26</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D27</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D28</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D29</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D30</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D31</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D32</li>');
+					$("#loudonglist").children('.container').append('<li class="time">D33</li>');
+				}
+				//  else if($(this).text() == "东二区") {
+				// } else if($(this).text() == "东三区") {
+				// } else if($(this).text() == "东四区") {
+				// }
+				$("#riqidrop").text($(this).text());
+				$(this).parent().slideToggle();
+			});
+			$(".container").delegate('.time', 'click', function() {
+				$("#timedrop").text($(this).text());
+				$(this).parent().slideToggle();
+				var temp = $(this).text();
+				$.cookie('dizhi', temp, { expires: 7 });
+				$.post("{{ url_for('dizhi') }}", {dizhi: temp}, function () {window.location.href = '';});
+			});
+			$(document).click(function(e, toggledDrop) {
+				var _con = $('li.drop');
+				if(!_con.is(e.target) && _con.has(e.target).length === 0) {
+					$("li.drop").next().slideUp();
+				}
+			});
+			$("li.drop").click(function() {
+				if ($(this).next().text() != "") {
+					$(this).next().slideToggle();
+				}
+				else {
+					$('.tishi').text('请先选择区域！');
+					$('.tishi').slideToggle(200);
+					setTimeout("$('.tishi').slideToggle(200);", 1000);
+				}
+			});
+		});
+	</script>
+</html>

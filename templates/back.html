@@ -1,0 +1,267 @@
+﻿<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta charset='utf-8'/>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-2.1.3.min.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/back.css') }}">
+    <style type="text/css">
+        .orderList {
+        }
+        .col1 {
+            float: left;
+            width: 60px;
+            border: 1px solid;
+        }
+        .col2 {
+            float: left;
+            width: 10px;
+            border: 1px solid;
+        }
+        .col3 {
+            float: left;
+            width: 15px;
+            border: 1px solid;
+        }
+    </style>
+    <title>触手可洗 - 后台管理</title>
+</head>
+
+<body>
+    <button onclick="viewHistory(this)">查看历史记录</button><br><br>
+    {% if auth == '1' %}
+    <button onclick="window.location.href='/back/advices'">建议</button>
+    {% endif %}
+    {% if not all %}
+    <button onclick="window.location.href='/back/orders/all'">查看全部</button>
+    {% endif %}
+    {% if all %}
+    <button onclick="window.location.href='/back/orders'">返回</button>
+    {% endif %}
+    <br><br>
+    <table id="BACKORDER_NEW" border="1" style="display:none">
+        <tr>
+            <th>订单编号</th>
+            <th>订单状态</th>
+            <th>订单详情</th>
+            <th>下单时间</th>
+            <th>客户地址</th>
+            <th>取衣时间</th>
+            <th>联系方式</th>
+            <th>留言</th>
+            <th>操作</th>
+            <th>备注</th>
+        </tr>
+    </table>
+	<table id="BACKORDER" border="1" style="display:none">
+        <tr>
+            <th>订单编号</th>
+            <th>订单状态</th>
+    		<th>订单详情</th>
+            <th>下单时间</th>
+            <th>客户地址</th>
+            <th>取衣时间</th>
+            <th>联系方式</th>
+    		<th>留言</th>
+            <th>操作</th>
+            <th>备注</th>
+        </tr>
+        <tr>
+            <td><button onclick="window.location.href='/back/orders'">排序</button></td>
+            <td>
+                <select id="stateCurrent">
+                    <option>所有</option>
+                    <option>未处理</option>
+                    <option>已接收</option>
+                    <option>正在清洗</option>
+                    <option>待送回</option>
+                    <option>已完成</option>
+                </select>
+            </td>
+            <td></td>
+            <td></td>
+            <td><button onclick="window.location.href='/back/orders/AdSort'">排序</button></td>
+            <td><button onclick="window.location.href='/back/orders/TimeSort'">排序</button></td>
+            <td><button onclick="window.location.href='/back/orders/ContactSort'">排序</button></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td class="orderID">
+                {{ order.id }}
+            </td>
+            <td class="state">
+                {% if order.state == 0 %}
+                未处理
+                {% endif %}
+                {% if order.state == 1 %}
+                已接收
+                {% endif %}
+                {% if order.state == 2 %}
+                正在清洗
+                {% endif %}
+                {% if order.state == 3 %}
+                待送回
+                {% endif %}
+                {% if order.state == 4 %}
+                已完成
+                {% endif %}
+            </td>
+            <td class="orderList">
+    	        {{ order.list }}
+    	    </td>
+            <td>
+                {{ order.time }}
+            </td>
+            <td>
+                {{ order.deliver }}
+            </td>
+            <td class="dtime">
+                {{ order.dtime }}
+            </td>
+            <td>
+    	        {{ order.contact }}
+            </td>
+            <td width="100">
+                {{order.note}}
+            </td>
+            <td>
+                {% if order.state == 0 %}
+                <button class="reBtn" onclick="updateOrder({{order.id}}, 1, '接收')">接收</button>
+                {% endif %}
+                {% if order.state == 1 %}
+                <button class="reBtn" onclick="updateOrder({{order.id}}, 2, '送洗')">送洗</button>
+                <button class="reBtn" onclick="updateOrder({{order.id}}, 0, '撤销')">撤销</button>
+                {% endif %}
+                {% if order.state == 2 %}
+                <button class="reBtn" onclick="updateOrder({{order.id}}, 3, '送回')">送回</button>
+                <button class="reBtn" onclick="updateOrder({{order.id}}, 1, '撤销')">撤销</button>
+                {% endif %}
+                {% if order.state == 3 %}
+                <button class="reBtn" onclick="updateOrder({{order.id}}, 4, '完成')">完成</button>
+                <button class="reBtn" onclick="updateOrder({{order.id}}, 2, '撤销')">撤销</button>
+                {% endif %}
+                {% if order.state == 4 %}
+                <button class="reBtn" onclick="updateOrder({{order.id}}, 3, '撤销')">撤销</button>
+                {% endif %}
+                {% if auth == '1' %}
+                <button class="reBtn" onclick="removeOrder({{order.id}})">删除</button>
+                {% endif %}
+            </td>
+            <td>
+                <textarea cols="auto" rows="auto">{{order.comment}}</textarea>
+                <button class="addBeizhu" id="beizhu_{{order.id}}">添加</button>
+            </td>
+    	</tr>
+        {% endfor %}
+	</table>
+</body>
+<script>
+    var interval = 3000;
+    $(document).ready(function() {
+        setTimeout('checkUpdate()', interval);
+        var list = $(".orderList").first();
+        while(list.length > 0) {
+            list.data($.parseJSON(list.text()));
+            var total = 0;
+            list.text("");
+            for(var i in list.data()) {
+                list.append("<div class='col1'>"+list.data(i).name+"</div> <div class='col2'>"+list.data(i).quantity+"</div> <div class='col3'>"+list.data(i).price+"</div><br>");
+                total += list.data(i).quantity * list.data(i).price;
+            }
+            list.append("总价："+total);
+            list = list.next();
+            var date = new Date(parseInt(list.text().trim()+"000"));
+            Y = date.getFullYear() + '-';
+            M = (date.getMonth()+1 < 10 ? (date.getMonth()+1) : date.getMonth()+1) + '-';
+            D = date.getDate() + ' ';
+            h = date.getHours() + ':';
+            m = date.getMinutes() + ':';
+            s = date.getSeconds();
+            list.text(Y+M+D+h+m+s);
+            // list = list.next().next();
+            // list.text(list.text().replace(/今天/, M+D))
+            list = list.parent().next().children(".orderList");
+        }
+        {% if auth == '0' %}
+        list = $(".orderID").last();
+        var id = 1;
+        while(list.length > 0) {
+            list.text(id);
+            id += 1;
+            list = list.parent().prev().children('.orderID');
+        }
+        {% endif %}
+        $("#BACKORDER").show();
+        $("select#stateCurrent").change(function(){
+            var t = $(this).children(":selected").text().trim();
+            var list = $("td.state").first();
+            $("#BACKORDER").children('tbody').children('tr').show();
+            while(list.length > 0) {
+                if(list.text().trim() != t && t != "所有")
+                    list.parent().hide();
+                list = list.parent().next().children(".state");
+            }
+        });
+        $("button.addBeizhu").click(function() {
+            // alert($(this).prev().val());
+            $.post("{{ url_for('addBeizhu') }}", {id: $(this).attr("id").substring(7), beizhu: $(this).prev().val()}, function() {alert("添加备注成功！")});
+        });
+    });
+    function viewHistory(v) {
+        $("body").prepend('<button onclick="deleteHistory()">删除所有记录</button>')
+        if ($.cookie("id"))
+            $("body").prepend('<h3>【历史记录】</h3>' + $.cookie("id") + "<br><br>");
+        v.remove();
+    }
+    function deleteHistory() {
+        if(confirm("确定删除所有记录？"))
+        {
+            $.cookie('id', null);
+        }
+    }
+    function checkUpdate() {
+        $.post("{{ url_for('checkUpdate') }}", {time: interval/1000}, function(data) {
+            for (var i = data.order.length-1 ; i >= 0; i--) {
+                alert("接到新订单："+data.order[i].id);
+            };
+            setTimeout('checkUpdate()', interval);
+        }).fail(function() {
+            alert("网络存在问题！");
+        });
+    }
+    function updateOrder(id, state, oper) {
+        if ($.cookie("id"))
+            $.cookie("id", $.cookie("id")+"<br>订单号："+id+" 操作："+oper+" 时间："+getFormatDate());
+        else
+            $.cookie("id", "订单号："+id+" 操作："+oper+" 时间："+getFormatDate());
+        $.post("{{ url_for('updateOrder') }}", {id: id, state: state}, function() {window.location.href = '';});
+    }
+    function removeOrder(id) {
+        if(confirm("确定删除么？"))
+        {
+            $.post("{{ url_for('removeOrder') }}", {id: id}, function() {window.location.href = '';});
+            if ($.cookie("id")) {
+                $.cookie("id", $.cookie("id")+"<br>订单号："+id+" 操作：删除 时间："+getFormatDate());
+            }
+            else
+                $.cookie("id", "订单号："+id+" 操作：删除 时间："+getFormatDate());
+        }
+        else
+        {
+        }
+    }
+    function getFormatDate() {
+        var date = new Date();
+        Y = date.getFullYear() + '-';
+        M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+        D = date.getDate() + ' ';
+        h = date.getHours() + ':';
+        m = date.getMinutes() + ':';
+        s = date.getSeconds(); 
+        return Y+M+D+h+m+s;
+    }
+</script>
+</html>

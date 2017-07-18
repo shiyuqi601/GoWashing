@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'/>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-2.1.3.min.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/back.css') }}">
+	<title>触手可洗 - 用户建议</title>
+</head>
+<body>
+    <button onclick="window.location.href='/back/orders'">订单管理</button><br><br>
+    <table>
+        <tr>
+            <th>时间</th>
+            <th>联系方式</th>
+    		<th>内容</th>
+        </tr>
+        {% for advice in advices %}
+    	<tr>
+    		<td class="time">
+    			{{ advice.time }}
+    		</td>
+    		<td>{{ advice.contact }}</td>
+    		<td>{{ advice.content }}</td>
+    	</tr>
+        {% endfor %}
+    </table>
+    <ul>
+    </ul>
+	<script type="text/javascript">
+		$(document).ready(function() {
+	        var list = $(".time").first();
+	        while(list.length > 0) {
+	            var date = new Date(parseInt(list.text().trim()+"000"));
+	            Y = date.getFullYear() + '-';
+	            M = (date.getMonth()+1 < 10 ? (date.getMonth()+1) : date.getMonth()+1) + '-';
+	            D = date.getDate() + ' ';
+	            h = date.getHours() + ':';
+	            m = date.getMinutes() + ':';
+	            s = date.getSeconds();
+	            list.text(Y+M+D+h+m+s);
+	            list = list.parent().next().children('.time').first();
+	        }
+		});
+	</script>
+</body>
+</html>

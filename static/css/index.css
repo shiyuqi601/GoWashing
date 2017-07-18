@@ -1,0 +1,229 @@
+body {
+	background: rgba(0, 155, 245, 0.87);
+	text-align: center;
+	color: white;
+	padding: 14px 0;
+	-moz-user-select:none;
+	-webkit-user-select:none;
+	font-family: "Microsoft JhengHei","Microsoft YaHei";
+}
+#loading {
+	border: none;
+	width: 70px;
+	height: 70px;
+	margin: 50px auto;
+}
+.A {
+	height: 250px;
+}
+#denglu {
+	height: 250px;
+}
+#logoImg {
+	margin: 15px auto;
+	max-width: 500px;
+	width: 90%;
+}
+#processImg {
+	margin: 5px auto;
+	max-width: 600px;
+	width: 90%;
+}
+#p1 {
+	margin: 0 auto;
+	width: 260px;
+	padding: 0;
+}
+#p2 {
+	margin: 0 auto;
+	width: 200px;
+}
+#p3 {
+	margin: 0 auto;
+	width: 260px;
+}
+.country {
+	height: 145px;
+}
+.sushe {
+	height: 530px;
+}
+.country .sushe {
+	width: 260px;
+	padding: 0;
+	margin: 0;
+}
+.country > .addr {
+	cursor: pointer;
+	width: 48px;
+	height: 36px;
+	border-radius: 48px;
+	padding: 12px 0 0 0;
+	border: 2px solid white;
+	font-size: 16px;
+	margin: 5px;
+	float: left;
+}
+.sushe > .addr {
+	cursor: pointer;
+	width: 48px;
+	height: 36px;
+	border-radius: 48px;
+	padding: 12px 0 0 0;
+	border: 2px solid white;
+	font-size: 16px;
+	margin: 5px;
+	float: left;
+}
+.school {
+	width: 200px;
+	height: auto;
+	margin: 0 auto;
+	margin-bottom: 20px;
+}
+.school > .addr {
+	cursor: pointer;
+	width: 180px;
+	height: 28px;
+	border-radius: 5px;
+	padding: 7px 0 0 0;
+	border: 2px solid white;
+	font-size: 16px;
+	margin: 7px auto;
+}
+.addr {
+	background: rgba(0, 155, 245, 0.87);
+	-webkit-transition:background 0.5s;
+	-moz-transition:background 0.5s;
+	-o-transition:background 0.5s;
+	transition:background 0.5s
+}
+.addr :hover {
+	background: white;
+	-webkit-transition:background 0.5s;
+	-moz-transition:background 0.5s;
+	-o-transition:background 0.5s;
+	transition:background 0.5s
+}
+.login {
+	margin: 5px 0 15px 0;
+}
+.login a {
+	cursor: pointer;
+	text-decoration: none;
+	border-radius: 5px;
+	font-size: 18px;
+	color: white;
+	padding: 5px 9px;
+	margin: 0 auto;
+	border: 1px solid white;
+	background: rgba(0, 155, 245, 0.87);
+	-webkit-transition:background 1s;
+	-moz-transition:background 1s;
+	-o-transition:background 1s;
+	transition:background 1s
+}
+.login a :hover {
+	background: white;
+	-webkit-transition:background 1s;
+	-moz-transition:background 1s;
+	-o-transition:background 1s;
+	transition:background 1s
+}
+input {
+	width: 160px;
+	font-size: 18px;
+	padding: 8px;
+	margin: 10px 0;
+	border: 0;
+}
+#signin {
+	margin: 0 auto;
+	width: 175px;
+}
+
+.tishi {
+	font-size: 20px;
+	display: none;
+	text-decoration: underline;
+	overflow:hidden;
+}
+
+#shijian {
+	margin: 0px;
+	font-size: 18px;
+	height: 50px;
+	margin-bottom: 20px;
+}
+
+b.triangle {
+	display: inline-block;
+	margin-left: 8px;
+	border-style: solid;
+	border-width: 12px 8px 0 8px;
+	border-color: white transparent transparent transparent;
+}
+li {
+	cursor: pointer;
+}
+#quyulist {
+	position: absolute;
+	list-style: none;
+	margin: 5px 0px 0px 10px;
+	padding: 0 0 0 0px;
+	width: 106px;
+	border-radius: 5px;
+	border: 2px solid white;
+	z-index: 1;
+	background: rgba(0, 155, 245, 0.78);
+}
+#loudonglist {
+	position: absolute;
+	list-style: none;
+	margin: 5px 0px 0px 140px;
+	padding: 0 0 0 0;
+	width: 106px;
+	border-radius: 5px;
+	border: 2px solid white;
+	z-index: 1;
+	background: rgba(0, 155, 245, 0.78);
+}
+ul.droplist .container li:hover {
+	border: 1px dashed white;
+}
+ul.droplist li {
+	border: 1px solid transparent;
+	padding: 3px;
+}
+.container {
+	position: relative;
+	display: none;
+	max-height: 200px;
+	overflow: auto;
+}
+.botImg {
+	width: 30%;
+}
+.botNav {
+	text-align: left;
+	margin: 3px;
+}
+.botList {
+	width: 180px;
+}
+hr {
+	border: 1px solid;
+	max-width: 350px;
+	width: 95%;
+}
+.botDiv {
+	font-size: 14px;
+	width: 280px;
+	margin: 0px auto;
+}
+.botHezuo {
+	font-size: 14px;
+	margin: 0px auto;
+	width: 75%;
+	max-width: 300px;
+}

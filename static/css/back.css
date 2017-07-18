@@ -1,0 +1,23 @@
+table, td
+{
+    border-collapse: collapse;
+    font-family:"Times New Roman", Arial, Helvetica, sans-serif;
+    font-size:12px;
+    border:1px solid #98bf21;
+    padding:3px 6px 2px 6px;
+}
+tr:nth-child(odd) td
+{
+    background-color:#EAF2D3;
+}
+th 
+{
+    font-family:"Times New Roman", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    font-size:12px;
+    text-align:left;
+    padding:3px 6px 2px 6px;  
+    border:1px solid #98bf21;
+    background-color:#A7C942;
+    color:#ffffff;
+}
